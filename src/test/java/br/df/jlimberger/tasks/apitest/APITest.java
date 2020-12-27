@@ -53,4 +53,28 @@ public class APITest {
 		
 	}
 
+	@Test
+	public void deveRemoverTarefaComSucesso() {
+		// Inserir uma tarefa
+		Integer id = RestAssured.given()
+			.body("{\"task\": \"Tarefa para remocao\",\"dueDate\": \"2021-12-31\"}")
+			.contentType(ContentType.JSON)
+		.when()
+			.post("/todo")
+		.then()
+			.log().all()
+			.statusCode(201)
+			.extract().path("id")
+		;		
+		//remover
+		RestAssured.given()
+		.when()
+			.delete("/todo/"+id)
+		.then()
+			.statusCode(204)
+	;		
+		
+	}
+	
+	
 }
